@@ -32,12 +32,12 @@ public class ArquivoController {
 		return new ArquivoResponseDTO(arquivoDomain.getCodigo(), arquivoDomain.getNome(), arquivoDomain.getTamanho(), arquivoDomain.getExtencao(), this.configurarURLDownload(arquivoDomain.getCodigo()));
 	}
 	
-	private String configurarURLDownload(Long codigo) {
-		return ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/arquivo/").path(String.valueOf(codigo)).toUriString();
+	private String configurarURLDownload(String codigo) {
+		return ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/arquivo/").path(codigo).toUriString();
 	}
 
 	@GetMapping("{codigo}")
-	public ResponseEntity<Resource> downloadOne(@PathVariable Long codigo) throws Exception {
+	public ResponseEntity<Resource> downloadOne(@PathVariable String codigo) throws Exception {
 		ArquivoDomain arquivoDomain = this.arquivoService.downloadOne(codigo);
 		return ResponseEntity
 				.ok()

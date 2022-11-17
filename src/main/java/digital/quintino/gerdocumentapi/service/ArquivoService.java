@@ -33,14 +33,15 @@ public class ArquivoService {
 	
 	private String converterTamanhoArquivo(Long tamanho) {
 		Long tamanhoArquivo = ((tamanho / 1024) / 1024);
-		return String.valueOf(tamanhoArquivo).toString().concat("MB");
+		return String.valueOf(tamanhoArquivo).toString().concat(" MB");
 	}
 	
-	public ArquivoDomain downloadOne(Long codigo) throws Exception {
-		return this.arquivoRepository.findById(codigo).orElseThrow(() -> new Exception("Arquivo Não Encontrado!"));
+	@Transactional
+	public ArquivoDomain downloadOne(String codigo) throws Exception {
+		return this.arquivoRepository.findByCodigo(codigo);
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional
 	private void verificarArquivoDuplicidade(MultipartFile multipartFile) {
 		if(this.arquivoImplementacaoService.isArquivoDuplicidade(multipartFile)) {
 			System.out.println("Arquivo Duplicado!");
