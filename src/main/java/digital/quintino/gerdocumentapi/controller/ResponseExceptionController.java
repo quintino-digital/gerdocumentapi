@@ -12,9 +12,14 @@ import digital.quintino.gerdocumentapi.dto.ResponseDTO;
 @ControllerAdvice
 public class ResponseExceptionController extends ResponseEntityExceptionHandler {
 	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ResponseDTO> exception(Exception exception) {
+		return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDTO(exception.getMessage(), HttpStatus.EXPECTATION_FAILED.value()));
+	}
+	
 	@ExceptionHandler(MaxUploadSizeExceededException.class)
 	public ResponseEntity<ResponseDTO> maxUploadSizeExceededException(Exception exception) {
 		return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDTO("O tamanho máximo do arquivo deve ser de até 1GB!", HttpStatus.EXPECTATION_FAILED.value()));
 	}
-
+	
 }

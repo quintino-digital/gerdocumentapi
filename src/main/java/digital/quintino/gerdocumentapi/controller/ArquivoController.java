@@ -27,7 +27,7 @@ public class ArquivoController {
 	private ArquivoService arquivoService;
 	
 	@PostMapping
-	public ArquivoResponseDTO uploadOne(@RequestParam("arquivo") MultipartFile multipartFile) {
+	public ArquivoResponseDTO uploadOne(@RequestParam("arquivo") MultipartFile multipartFile) throws Exception {
 		ArquivoDomain arquivoDomain = this.arquivoService.uploadOne(multipartFile);
 		return new ArquivoResponseDTO(arquivoDomain.getCodigo(), arquivoDomain.getNome(), arquivoDomain.getTamanho(), arquivoDomain.getExtencao(), this.configurarURLDownload(arquivoDomain.getCodigo()));
 	}

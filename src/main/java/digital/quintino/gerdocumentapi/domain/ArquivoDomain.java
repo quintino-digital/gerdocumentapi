@@ -11,6 +11,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 /**
 
@@ -47,6 +48,7 @@ public class ArquivoDomain implements Serializable {
 	private String extencao;
 	
 	@Lob
+	@Type(type = "org.hibernate.type.ImageType")
 	@Column(name = "CONTEUDO", nullable = false)
 	private byte[] conteudo;
 

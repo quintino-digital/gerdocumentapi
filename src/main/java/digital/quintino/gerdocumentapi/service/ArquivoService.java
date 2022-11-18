@@ -21,8 +21,11 @@ public class ArquivoService {
 	private ArquivoImplementacaoService arquivoImplementacaoService;
 	
 	// TODO -- Validar se o arquivo está duplicado
-	public ArquivoDomain uploadOne(MultipartFile multipartFile) {
+	public ArquivoDomain uploadOne(MultipartFile multipartFile) throws Exception {
 		ArquivoDomain arquivoDomain = new ArquivoDomain();
+		if(this.verificarArquivoDuplicidade(multipartFile)) {
+			throw new Exception("O mesmo arquivo já foi cadastrado na base de Dados!");
+		}
 		try {
 			arquivoDomain = new ArquivoDomain(multipartFile.getOriginalFilename(), this.retornarTamanhoArquivo(multipartFile.getSize()), multipartFile.getContentType(), multipartFile.getBytes());
 		} catch (IOException e) {
@@ -45,8 +48,9 @@ public class ArquivoService {
 		}
 		if(KB != 0L) {
 			return String.valueOf((tamanho / 1024)).toString().concat(" KB");
+		} else {
+			return String.valueOf(1).toString().concat(" KB");
 		}
-		return null;
 	}
 	
 	@Transactional
@@ -54,11 +58,8 @@ public class ArquivoService {
 		return this.arquivoRepository.findByCodigo(codigo);
 	}
 
-	@Transactional
-	private void verificarArquivoDuplicidade(MultipartFile multipartFile) {
-		if(this.arquivoImplementacaoService.isArquivoDuplicidade(multipartFile)) {
-			System.out.println("Arquivo Duplicado!");
-		}
+	private Boolean verificarArquivoDuplicidade(MultipartFile multipartFile) {
+		return this.arquivoImplementacaoService.isArquivoDuplicidade(multipartFile);
 	}
 
 }
