@@ -1,5 +1,6 @@
 package digital.quintino.gerdocumentapi.controller;
 
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
 
@@ -38,7 +39,7 @@ public class ArquivoController {
 	
 	private String configurarURLDownload(String codigo, HttpServletRequest httpServletRequest) throws UnknownHostException, MalformedURLException {
 		StringBuilder url = new StringBuilder("http://")
-				.append(httpServletRequest.getServerName())
+				.append(InetAddress.getLocalHost().getHostAddress())
 				.append(":")
 				.append(httpServletRequest.getServerPort())
 				.append("/api/v1/arquivo/")
