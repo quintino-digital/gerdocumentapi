@@ -24,16 +24,29 @@ public class ArquivoService {
 	public ArquivoDomain uploadOne(MultipartFile multipartFile) {
 		ArquivoDomain arquivoDomain = new ArquivoDomain();
 		try {
-			arquivoDomain = new ArquivoDomain(multipartFile.getOriginalFilename(), this.converterTamanhoArquivo(multipartFile.getSize()), multipartFile.getContentType(), multipartFile.getBytes());
+			arquivoDomain = new ArquivoDomain(multipartFile.getOriginalFilename(), this.retornarTamanhoArquivo(multipartFile.getSize()), multipartFile.getContentType(), multipartFile.getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return this.arquivoRepository.save(arquivoDomain);
 	}
 	
-	private String converterTamanhoArquivo(Long tamanho) {
-		Long tamanhoArquivo = ((tamanho / 1024) / 1024);
-		return String.valueOf(tamanhoArquivo).toString().concat(" MB");
+	private String retornarTamanhoArquivo(Long tamanho) {
+		
+		long GB = (((tamanho / 1024) / 1024) / 1024);
+		long MB = ((tamanho / 1024) / 1024);
+		long KB = (tamanho / 1024);
+		
+		if(GB != 0L) {
+			return String.valueOf(((tamanho / 1024) / 1024)).toString().concat(" GB");
+		} 
+		if(MB != 0L) {
+			return String.valueOf(((tamanho / 1024) / 1024)).toString().concat(" MB");
+		}
+		if(KB != 0L) {
+			return String.valueOf((tamanho / 1024)).toString().concat(" KB");
+		}
+		return null;
 	}
 	
 	@Transactional
