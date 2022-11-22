@@ -21,7 +21,7 @@ public class ResponseDTO {
 	public ResponseDTO() { }
 
 	public ResponseDTO(String mensagem, int situacao) {
-		this.data = DateUtility.formatarData(new Date(), DateUtility.FORMATO_DDMMAAAA);
+		this.data = DateUtility.formatarData(new Date(), DateUtility.FORMATO_DDMMAAAAHHMMSS);
 		this.mensagem = mensagem;
 		this.situacao = situacao;
 	}

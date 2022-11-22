@@ -1,15 +1,15 @@
 package digital.quintino.gerdocumentapi.service;
 
-import java.io.IOException;
-
+import digital.quintino.gerdocumentapi.domain.ArquivoDomain;
+import digital.quintino.gerdocumentapi.repository.ArquivoImplementacaoService;
+import digital.quintino.gerdocumentapi.repository.ArquivoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import digital.quintino.gerdocumentapi.domain.ArquivoDomain;
-import digital.quintino.gerdocumentapi.repository.ArquivoImplementacaoService;
-import digital.quintino.gerdocumentapi.repository.ArquivoRepository;
+import java.io.IOException;
+import java.util.List;
 
 @Service
 public class ArquivoService {
@@ -21,6 +21,7 @@ public class ArquivoService {
 	private ArquivoImplementacaoService arquivoImplementacaoService;
 	
 	// TODO -- Validar se o arquivo está duplicado
+	@Transactional
 	public ArquivoDomain uploadOne(MultipartFile multipartFile) throws Exception {
 		ArquivoDomain arquivoDomain = new ArquivoDomain();
 		if(this.verificarArquivoDuplicidade(multipartFile)) {
@@ -60,6 +61,10 @@ public class ArquivoService {
 
 	private Boolean verificarArquivoDuplicidade(MultipartFile multipartFile) {
 		return this.arquivoImplementacaoService.isArquivoDuplicidade(multipartFile);
+	}
+
+	public List<ArquivoDomain> findAll() {
+		return this.arquivoRepository.findAll();
 	}
 
 }

@@ -1,17 +1,10 @@
 package digital.quintino.gerdocumentapi.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 /**
 
@@ -48,8 +41,7 @@ public class ArquivoDomain implements Serializable {
 	private String extencao;
 	
 	@Lob
-	@Type(type = "org.hibernate.type.ImageType")
-	@Column(name = "CONTEUDO", nullable = false)
+	@Column(name = "CONTEUDO", length = 999999999, nullable = false)
 	private byte[] conteudo;
 
 	public ArquivoDomain() { }
