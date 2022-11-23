@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
@@ -28,9 +29,14 @@ public class ArquivoController {
 	private ArquivoService arquivoService;
 
 	@Value("${servidor.ip}")
-	public String IP_CONFIGURACAO;
+	private String IP_CONFIGURACAO;
 
 	// TODO -- Implementar Processamento Assincrono para arquivos com tamanho acima de 512MB
+	@PostMapping("/all")
+	public ResponseEntity<List<ArquivoResponseDTO>> uploadAll(@RequestParam("arquivoList") List<MultipartFile> multipartFileList) throws IOException {
+		return ResponseEntity.ok().body(this.arquivoService.uploadAll(multipartFileList));
+	}
+
 	@PostMapping
 	public ArquivoResponseDTO uploadOne(@RequestParam("arquivo") MultipartFile multipartFile, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
 		ArquivoDomain arquivoDomain = this.arquivoService.uploadOne(multipartFile);
@@ -48,6 +54,7 @@ public class ArquivoController {
 		return url.toString();
 	}
 
+	// TODO -- Salvar URL no Banco de Dados
 	@GetMapping("{codigo}")
 	public ResponseEntity<Resource> downloadOne(@PathVariable String codigo) throws Exception {
 		ArquivoDomain arquivoDomain = this.arquivoService.downloadOne(codigo);
@@ -58,9 +65,8 @@ public class ArquivoController {
 							.body(new ByteArrayResource(arquivoDomain.getConteudo()));
 	}
 
-	// TODO -- Retornar DTO com apenas dados básicos dos Arquivos
 	@GetMapping
-	public ResponseEntity<List<ArquivoDomain>> findAll() {
+	public ResponseEntity<List<ArquivoResponseDTO>> findAll() {
 		return ResponseEntity.ok(this.arquivoService.findAll());
 	}
 

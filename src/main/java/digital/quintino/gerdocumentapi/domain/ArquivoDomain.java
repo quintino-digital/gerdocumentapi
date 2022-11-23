@@ -41,8 +41,11 @@ public class ArquivoDomain implements Serializable {
 	private String extencao;
 	
 	@Lob
-	@Column(name = "CONTEUDO", length = 999999999, nullable = false)
+	@Column(name = "CONTEUDO", length = 999999999)
 	private byte[] conteudo;
+
+	@Column(name = "URL")
+	private String url;
 
 	public ArquivoDomain() { }
 
@@ -51,6 +54,13 @@ public class ArquivoDomain implements Serializable {
 		this.tamanho = tamanho;
 		this.extencao = extencao;
 		this.conteudo = conteudo;
+	}
+
+	public ArquivoDomain(String nome, String tamanho, String extencao, String url) {
+		this.nome = nome;
+		this.tamanho = tamanho;
+		this.extencao = extencao;
+		this.url = url;
 	}
 
 	public String getCodigo() {
@@ -96,6 +106,14 @@ public class ArquivoDomain implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(codigo);
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	@Override
