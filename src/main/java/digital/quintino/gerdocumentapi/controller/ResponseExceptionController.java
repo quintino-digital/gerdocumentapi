@@ -1,7 +1,7 @@
 package digital.quintino.gerdocumentapi.controller;
 
 import digital.quintino.gerdocumentapi.dto.ResponseDTO;
-import digital.quintino.gerdocumentapi.utility.MensagemUtility;
+import digital.quintino.gerdocumentapi.utility.ConstanteUtility;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,7 +19,7 @@ public class ResponseExceptionController extends ResponseEntityExceptionHandler 
 	
 	@ExceptionHandler(MaxUploadSizeExceededException.class)
 	public ResponseEntity<ResponseDTO> maxUploadSizeExceededException(Exception exception) {
-		return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDTO(MensagemUtility.MENSAGEM_TAMANHO_MAXIMO_ARQUIVO_UPLOAD, HttpStatus.EXPECTATION_FAILED.value()));
+		return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDTO(ConstanteUtility.MENSAGEM_TAMANHO_MAXIMO_ARQUIVO_UPLOAD, HttpStatus.EXPECTATION_FAILED.value()));
 	}
 	
 }
