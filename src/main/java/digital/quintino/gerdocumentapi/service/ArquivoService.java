@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ public class ArquivoService {
 
 	public static final String DIRETORIO_UPLOAD = System.getProperty("user.home").concat(ConstanteUtility.REPOSITORIO_UPLOAD);
 
-	public static final Long TAMANHO_MAXIMO_ARQUIVO = 536870912L;
+	public static final Long TAMANHO_MAXIMO_ARQUIVO = 0L;
 	
 	@Transactional
 	public ArquivoDomain uploadOne(MultipartFile multipartFile) throws Exception {
@@ -84,15 +86,15 @@ public class ArquivoService {
 		long KB = (tamanho / 1024);
 
 		if(GB != 0L) {
-			return String.valueOf(((tamanho / 1024) / 1024)).toString().concat(" GB");
+			return String.valueOf(((tamanho / 1024) / 1024)).toString().concat("GB");
 		}
 		if(MB != 0L) {
-			return String.valueOf(((tamanho / 1024) / 1024)).toString().concat(" MB");
+			return String.valueOf(((tamanho / 1024) / 1024)).toString().concat("MB");
 		}
 		if(KB != 0L) {
-			return String.valueOf((tamanho / 1024)).toString().concat(" KB");
+			return String.valueOf((tamanho / 1024)).toString().concat("KB");
 		} else {
-			return String.valueOf(1).toString().concat(" KB");
+			return String.valueOf(1).toString().concat("KB");
 		}
 	}
 
@@ -131,7 +133,7 @@ public class ArquivoService {
 					.append(InetAddress.getLocalHost().getHostAddress().equals("127.0.1.1") ? IP_CONFIGURACAO : InetAddress.getLocalHost().getHostAddress())
 					.append(":")
 					.append(SERVER_PORT_CONFIGURACAO)
-					.append("/api/v1/arquivo/")
+					.append("/api/v1/arquivo/storage/")
 					.append(codigo);
 		} catch (UnknownHostException e) {
 			throw new RuntimeException(e);
@@ -139,7 +141,7 @@ public class ArquivoService {
 		return url.toString();
 	}
 
-    public ArquivoResponseDTO downloadOneStorage(String codigo) {
+    public ArquivoResponseDTO downloadOneStorage(String codigo) throws FileNotFoundException, MalformedURLException {
 		ArquivoDomain arquivoDomain = this.arquivoRepository.findByCodigo(codigo);
 		return this.configurarArquivoResponseDTO(arquivoDomain);
     }
