@@ -16,12 +16,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+
+import static java.nio.file.Paths.get;
 
 @RestController
 @RequestMapping("/api/v1/arquivo")
@@ -73,9 +77,13 @@ public class ArquivoController {
 	}
 
 	@GetMapping("/storage/{codigo}")
-	public ResponseEntity<Resource> downloadOneStorage(@PathVariable String codigo) throws MalformedURLException {
+	public ResponseEntity<Resource> downloadOneStorage(@PathVariable String codigo) throws MalformedURLException, FileNotFoundException {
 		ArquivoResponseDTO arquivoResponseDTO = this.arquivoService.downloadOneStorage(codigo);
-		Resource resource = new UrlResource(arquivoResponseDTO.getUrl());
+		Path path = get(ArquivoService.DIRETORIO_UPLOAD).toAbsolutePath().normalize().resolve(arquivoResponseDTO.getNome());
+		if(!Files.exists(path)) {
+			throw new FileNotFoundException();
+		}
+		Resource resource = new UrlResource(path.toUri());
 		return ResponseEntity
 				.ok()
 				.contentType(MediaType.parseMediaType(arquivoResponseDTO.getExtencao()))
