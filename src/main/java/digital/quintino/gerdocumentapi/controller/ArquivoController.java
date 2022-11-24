@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
+import java.nio.file.Path;
 import java.util.List;
 
 @RestController
@@ -68,6 +70,17 @@ public class ArquivoController {
 	@GetMapping
 	public ResponseEntity<List<ArquivoResponseDTO>> findAll() {
 		return ResponseEntity.ok(this.arquivoService.findAll());
+	}
+
+	@GetMapping("/storage/{codigo}")
+	public ResponseEntity<Resource> downloadOneStorage(@PathVariable String codigo) throws MalformedURLException {
+		ArquivoResponseDTO arquivoResponseDTO = this.arquivoService.downloadOneStorage(codigo);
+		Resource resource = new UrlResource(arquivoResponseDTO.getUrl());
+		return ResponseEntity
+				.ok()
+				.contentType(MediaType.parseMediaType(arquivoResponseDTO.getExtencao()))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + arquivoResponseDTO.getNome() + "\"")
+				.body(resource);
 	}
 
 }

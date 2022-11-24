@@ -38,6 +38,10 @@ public class ArquivoService {
 	private String SERVER_PORT_CONFIGURACAO;
 
 	private static String NOME_ARQUIVO;
+
+	public static final String DIRETORIO_UPLOAD = System.getProperty("user.home").concat(ConstanteUtility.REPOSITORIO_UPLOAD);
+
+	public static final Long TAMANHO_MAXIMO_ARQUIVO = 536870912L;
 	
 	@Transactional
 	public ArquivoDomain uploadOne(MultipartFile multipartFile) throws Exception {
@@ -70,7 +74,7 @@ public class ArquivoService {
 	}
 
 	private static Path recuperarDiretorioArquivo(String nomeArquivo) {
-		return get(ConstanteUtility.DIRETORIO_UPLOAD, nomeArquivo).toAbsolutePath().normalize();
+		return get(DIRETORIO_UPLOAD, nomeArquivo).toAbsolutePath().normalize();
 	}
 
 	private String retornarTamanhoArquivo(Long tamanho) {
@@ -110,7 +114,7 @@ public class ArquivoService {
 	}
 
 	private ArquivoDomain configurarArquivoDomain(MultipartFile multipartFile) throws IOException {
-		if(multipartFile.getSize() > 536870912L) {
+		if(multipartFile.getSize() > TAMANHO_MAXIMO_ARQUIVO) {
 			return new ArquivoDomain(multipartFile.getOriginalFilename(), this.retornarTamanhoArquivo(multipartFile.getSize()), multipartFile.getContentType(), recuperarDiretorioArquivo(multipartFile.getOriginalFilename()).toString());
 		}
 		return new ArquivoDomain(multipartFile.getOriginalFilename(), this.retornarTamanhoArquivo(multipartFile.getSize()), multipartFile.getContentType(), multipartFile.getBytes());
@@ -134,5 +138,10 @@ public class ArquivoService {
 		}
 		return url.toString();
 	}
+
+    public ArquivoResponseDTO downloadOneStorage(String codigo) {
+		ArquivoDomain arquivoDomain = this.arquivoRepository.findByCodigo(codigo);
+		return this.configurarArquivoResponseDTO(arquivoDomain);
+    }
 
 }

@@ -63,6 +63,14 @@ public class ArquivoDomain implements Serializable {
 		this.url = url;
 	}
 
+	public ArquivoDomain(String nome, String tamanho, String extencao, byte[] conteudo, String url) {
+		this.nome = nome;
+		this.tamanho = tamanho;
+		this.extencao = extencao;
+		this.conteudo = conteudo;
+		this.url = url;
+	}
+
 	public String getCodigo() {
 		return codigo;
 	}
