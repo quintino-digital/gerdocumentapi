@@ -15,6 +15,8 @@ public class ResponseExceptionController extends ResponseEntityExceptionHandler 
 
 	public static final String MENSAGEM_TAMANHO_MAXIMO_ARQUIVO_UPLOAD = "O tamanho máximo do arquivo deve ser de até 3GB!";
 
+	public static final String MENSAGEM_ARQUIVO_NAO_ENCONTRADO = "Arquivo não existe no servidor!";
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ResponseDTO> exception(Exception exception) {
 		return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDTO(exception.getMessage(), HttpStatus.EXPECTATION_FAILED.value()));
@@ -27,7 +29,7 @@ public class ResponseExceptionController extends ResponseEntityExceptionHandler 
 
 	@ExceptionHandler(FileNotFoundException.class)
 	public ResponseEntity<ResponseDTO> FileNotFoundException(Exception exception) {
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(exception.getMessage(), HttpStatus.NOT_FOUND.value()));
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(MENSAGEM_ARQUIVO_NAO_ENCONTRADO, HttpStatus.NOT_FOUND.value()));
 	}
 	
 }
