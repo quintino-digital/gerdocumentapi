@@ -1,6 +1,7 @@
 package digital.quintino.gerdocumentapi.service;
 
 import digital.quintino.gerdocumentapi.domain.ArquivoDomain;
+import digital.quintino.gerdocumentapi.domain.DiretorioDomain;
 import digital.quintino.gerdocumentapi.dto.ArquivoResponseDTO;
 import digital.quintino.gerdocumentapi.repository.ArquivoImplementacaoService;
 import digital.quintino.gerdocumentapi.repository.ArquivoRepository;
@@ -33,6 +34,9 @@ public class ArquivoService {
 	@Autowired
 	private ArquivoImplementacaoService arquivoImplementacaoService;
 
+	@Autowired
+	private DiretorioService diretorioService;
+
 	@Value("${servidor.ip}")
 	private String IP_CONFIGURACAO;
 
@@ -64,12 +68,12 @@ public class ArquivoService {
 		return NOME_ARQUIVO;
 	}
 
-	public List<ArquivoResponseDTO> uploadAll(List<MultipartFile> multipartFileList) throws IOException {
+	public List<ArquivoResponseDTO> uploadAll(List<MultipartFile> multipartFileList, String codigoDiretorio) throws IOException {
 		List<ArquivoResponseDTO> arquivoResponseDTOList = new ArrayList<>();
 		for(MultipartFile multipartFile : multipartFileList) {
 			Path path = recuperarDiretorioArquivo(multipartFile.getOriginalFilename());
 			copy(multipartFile.getInputStream(), path, REPLACE_EXISTING);
-			ArquivoDomain arquivoDomain = this.arquivoRepository.save(this.configurarArquivoDomain(multipartFile));
+			ArquivoDomain arquivoDomain = this.arquivoRepository.save(this.configurarArquivoDomain(multipartFile, codigoDiretorio));
 			arquivoResponseDTOList.add(this.configurarArquivoResponseDTO(arquivoDomain));
 		}
 		return arquivoResponseDTOList;
@@ -115,15 +119,15 @@ public class ArquivoService {
 		return arquivoResponseDTOList;
 	}
 
-	private ArquivoDomain configurarArquivoDomain(MultipartFile multipartFile) throws IOException {
+	private ArquivoDomain configurarArquivoDomain(MultipartFile multipartFile, String codigoDiretorio) throws IOException {
 		if(multipartFile.getSize() > TAMANHO_MAXIMO_ARQUIVO) {
-			return new ArquivoDomain(multipartFile.getOriginalFilename(), this.retornarTamanhoArquivo(multipartFile.getSize()), multipartFile.getContentType(), recuperarDiretorioArquivo(multipartFile.getOriginalFilename()).toString());
+			return new ArquivoDomain(multipartFile.getOriginalFilename(), this.retornarTamanhoArquivo(multipartFile.getSize()), multipartFile.getContentType(), recuperarDiretorioArquivo(multipartFile.getOriginalFilename()).toString(), this.recuperarDiretorioDomain(codigoDiretorio));
 		}
 		return new ArquivoDomain(multipartFile.getOriginalFilename(), this.retornarTamanhoArquivo(multipartFile.getSize()), multipartFile.getContentType(), multipartFile.getBytes());
 	}
 
 	private ArquivoResponseDTO configurarArquivoResponseDTO(ArquivoDomain arquivoDomain) {
-		return new ArquivoResponseDTO(arquivoDomain.getCodigo(), arquivoDomain.getNome(), arquivoDomain.getTamanho(), arquivoDomain.getExtencao(), this.configurarURL(arquivoDomain.getCodigo()));
+		return new ArquivoResponseDTO(arquivoDomain.getCodigo(), arquivoDomain.getNome(), arquivoDomain.getTamanho(), arquivoDomain.getExtencao(), this.configurarURL(arquivoDomain.getCodigo()), arquivoDomain.getDiretorioDomain().getCodigo());
 	}
 
 	private String configurarURL(String codigo) {
@@ -145,5 +149,9 @@ public class ArquivoService {
 		ArquivoDomain arquivoDomain = this.arquivoRepository.findByCodigo(codigo);
 		return this.configurarArquivoResponseDTO(arquivoDomain);
     }
+
+	public DiretorioDomain recuperarDiretorioDomain(String codigoDiretorio) {
+		return this.diretorioService.findOne(codigoDiretorio);
+	}
 
 }

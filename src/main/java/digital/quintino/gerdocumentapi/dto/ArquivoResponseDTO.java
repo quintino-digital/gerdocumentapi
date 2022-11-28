@@ -3,6 +3,8 @@ package digital.quintino.gerdocumentapi.dto;
 public class ArquivoResponseDTO {
 	
 	private String codigo;
+
+	private String codigoDiretorio;
 	
 	private String nome;
 	
@@ -20,6 +22,15 @@ public class ArquivoResponseDTO {
 		this.tamanho = tamanho;
 		this.extencao = extencao;
 		this.url = url;
+	}
+
+	public ArquivoResponseDTO(String codigo, String nome, String tamanho, String extencao, String url, String codigoDiretorio) {
+		this.codigo = codigo;
+		this.nome = nome;
+		this.tamanho = tamanho;
+		this.extencao = extencao;
+		this.url = url;
+		this.codigoDiretorio = codigoDiretorio;
 	}
 
 	public String getCodigo() {
@@ -60,6 +71,14 @@ public class ArquivoResponseDTO {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getCodigoDiretorio() {
+		return codigoDiretorio;
+	}
+
+	public void setCodigoDiretorio(String codigoDiretorio) {
+		this.codigoDiretorio = codigoDiretorio;
 	}
 
 }

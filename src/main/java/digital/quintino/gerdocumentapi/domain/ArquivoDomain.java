@@ -30,6 +30,10 @@ public class ArquivoDomain implements Serializable {
 	@GenericGenerator(name = "uuid", strategy = "uuid2")
 	@Column(name = "CODIGO", nullable = false)
 	private String codigo;
+
+	@ManyToOne
+	@JoinColumn(name = "ID_DIRETORIO")
+	private DiretorioDomain diretorioDomain;
 	
 	@Column(name = "NOME", nullable = false)
 	private String nome;
@@ -56,11 +60,12 @@ public class ArquivoDomain implements Serializable {
 		this.conteudo = conteudo;
 	}
 
-	public ArquivoDomain(String nome, String tamanho, String extencao, String url) {
+	public ArquivoDomain(String nome, String tamanho, String extencao, String url, DiretorioDomain diretorioDomain) {
 		this.nome = nome;
 		this.tamanho = tamanho;
 		this.extencao = extencao;
 		this.url = url;
+		this.diretorioDomain = diretorioDomain;
 	}
 
 	public ArquivoDomain(String nome, String tamanho, String extencao, byte[] conteudo, String url) {
@@ -69,6 +74,14 @@ public class ArquivoDomain implements Serializable {
 		this.extencao = extencao;
 		this.conteudo = conteudo;
 		this.url = url;
+	}
+
+	public DiretorioDomain getDiretorioDomain() {
+		return diretorioDomain;
+	}
+
+	public void setDiretorioDomain(DiretorioDomain diretorioDomain) {
+		this.diretorioDomain = diretorioDomain;
 	}
 
 	public String getCodigo() {

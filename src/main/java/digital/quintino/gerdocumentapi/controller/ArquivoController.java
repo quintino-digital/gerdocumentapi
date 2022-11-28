@@ -39,8 +39,8 @@ public class ArquivoController {
 
 	// TODO -- Implementar Processamento Assincrono para arquivos com tamanho acima de 512MB
 	@PostMapping("/all")
-	public ResponseEntity<List<ArquivoResponseDTO>> uploadAll(@RequestParam("arquivoList") List<MultipartFile> multipartFileList) throws IOException {
-		return ResponseEntity.ok().body(this.arquivoService.uploadAll(multipartFileList));
+	public ResponseEntity<List<ArquivoResponseDTO>> uploadAll(@RequestParam("arquivoList") List<MultipartFile> multipartFileList, String codigoDiretorio) throws IOException {
+		return ResponseEntity.ok().body(this.arquivoService.uploadAll(multipartFileList, codigoDiretorio));
 	}
 
 	@PostMapping
