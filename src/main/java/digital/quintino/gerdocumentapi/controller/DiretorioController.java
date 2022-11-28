@@ -25,4 +25,14 @@ public class DiretorioController {
 		return ResponseEntity.ok(this.diretorioService.findAll());
 	}
 
+	@GetMapping("/raiz")
+	public ResponseEntity<List<DiretorioDomain>> recuperarDiretorioRaiz() {
+		return ResponseEntity.ok().body(this.diretorioService.recuperarDiretorioRaiz());
+	}
+
+	@GetMapping("{codigo}")
+	public ResponseEntity<DiretorioDomain> findOne(@PathVariable("codigo") String codigo) {
+		return ResponseEntity.ok().body(this.diretorioService.findOne(codigo));
+	}
+
 }

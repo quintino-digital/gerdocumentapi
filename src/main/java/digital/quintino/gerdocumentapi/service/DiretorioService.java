@@ -1,6 +1,7 @@
 package digital.quintino.gerdocumentapi.service;
 
 import digital.quintino.gerdocumentapi.domain.DiretorioDomain;
+import digital.quintino.gerdocumentapi.repository.DiretorioImplementacaoService;
 import digital.quintino.gerdocumentapi.repository.DiretorioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ public class DiretorioService {
 	@Autowired
 	private DiretorioRepository diretorioRepository;
 
+	@Autowired
+	private DiretorioImplementacaoService diretorioImplementacaoService;
+
 	public DiretorioDomain findOne(String codigo) {
 		return this.diretorioRepository.findByCodigo(codigo);
 	}
@@ -25,6 +29,10 @@ public class DiretorioService {
 
 	public List<DiretorioDomain> findAll() {
 		return this.diretorioRepository.findAll();
+	}
+
+	public List<DiretorioDomain> recuperarDiretorioRaiz() {
+		return this.diretorioImplementacaoService.recuperarDiretorioRaiz();
 	}
 
 }
