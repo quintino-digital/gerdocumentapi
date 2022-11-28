@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/diretorio")
+@CrossOrigin("*")
 public class DiretorioController {
 	
 	@Autowired
@@ -33,6 +34,11 @@ public class DiretorioController {
 	@GetMapping("{codigo}")
 	public ResponseEntity<DiretorioDomain> findOne(@PathVariable("codigo") String codigo) {
 		return ResponseEntity.ok().body(this.diretorioService.findOne(codigo));
+	}
+
+	@GetMapping("/subdiretorio/{codigo}")
+	public ResponseEntity<List<DiretorioDomain>> recuperarSubDiretorio(@PathVariable("codigo") String codigo) {
+		return ResponseEntity.ok().body(this.diretorioService.recuperarSubDiretorio(codigo));
 	}
 
 }

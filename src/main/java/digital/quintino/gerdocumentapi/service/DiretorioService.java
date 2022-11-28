@@ -35,4 +35,8 @@ public class DiretorioService {
 		return this.diretorioImplementacaoService.recuperarDiretorioRaiz();
 	}
 
+	public List<DiretorioDomain> recuperarSubDiretorio(String codigo) {
+		return this.diretorioImplementacaoService.recuperarSubDiretorio(codigo);
+	}
+
 }
