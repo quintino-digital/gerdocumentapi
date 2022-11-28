@@ -154,4 +154,8 @@ public class ArquivoService {
 		return this.diretorioService.findOne(codigoDiretorio);
 	}
 
+	public List<ArquivoDomain> recuperarArquivosDiretorio(String codigoDiretorio) {
+		return this.arquivoImplementacaoService.recuperarArquivosDiretorio(codigoDiretorio);
+	}
+
 }

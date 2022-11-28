@@ -91,4 +91,9 @@ public class ArquivoController {
 				.body(resource);
 	}
 
+	@GetMapping("/diretorio/{codigoDiretorio}")
+	public ResponseEntity<List<ArquivoDomain>> recuperarArquivosDiretorio(@PathVariable("codigoDiretorio") String codigoDiretorio) {
+		return ResponseEntity.ok().body(this.arquivoService.recuperarArquivosDiretorio(codigoDiretorio));
+	}
+
 }
