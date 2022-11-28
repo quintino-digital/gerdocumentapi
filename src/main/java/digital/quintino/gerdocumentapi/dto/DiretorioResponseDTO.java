@@ -7,26 +7,46 @@ import java.util.List;
 
 public class DiretorioResponseDTO {
 
-    private List<DiretorioDomain> diretorioRaizDomainList = new ArrayList<>();
+    private String codigo;
 
-    private List<DiretorioDomain> subdiretorioDiretorioRaizList = new ArrayList<>();
+    private String codigoDiretorioPai;
+
+    private String nome;
+
+    private List<DiretorioDomain> subdiretorioList = new ArrayList<>();
 
     public DiretorioResponseDTO() { }
 
-    public List<DiretorioDomain> getDiretorioRaizDomainList() {
-        return diretorioRaizDomainList;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setDiretorioRaizDomainList(List<DiretorioDomain> diretorioRaizDomainList) {
-        this.diretorioRaizDomainList = diretorioRaizDomainList;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public List<DiretorioDomain> getSubdiretorioDiretorioRaizList() {
-        return subdiretorioDiretorioRaizList;
+    public String getCodigoDiretorioPai() {
+        return codigoDiretorioPai;
     }
 
-    public void setSubdiretorioDiretorioRaizList(List<DiretorioDomain> subdiretorioDiretorioRaizList) {
-        this.subdiretorioDiretorioRaizList = subdiretorioDiretorioRaizList;
+    public void setCodigoDiretorioPai(String codigoDiretorioPai) {
+        this.codigoDiretorioPai = codigoDiretorioPai;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public List<DiretorioDomain> getSubdiretorioList() {
+        return subdiretorioList;
+    }
+
+    public void setSubdiretorioList(List<DiretorioDomain> subdiretorioList) {
+        this.subdiretorioList = subdiretorioList;
     }
 
 }

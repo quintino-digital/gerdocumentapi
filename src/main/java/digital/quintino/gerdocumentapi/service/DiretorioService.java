@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,15 +42,21 @@ public class DiretorioService {
 		return this.diretorioImplementacaoService.recuperarSubDiretorio(codigo);
 	}
 
-	public DiretorioResponseDTO recuperarDiretorioPrimeiroNivel() {
-		DiretorioResponseDTO diretorioResponseDTO = new DiretorioResponseDTO();
-			diretorioResponseDTO.setDiretorioRaizDomainList(this.recuperarDiretorioRaiz());
-			for(DiretorioDomain diretorioDomainResultado : diretorioResponseDTO.getDiretorioRaizDomainList()) {
-				for(DiretorioDomain subdiretorioDiretorioRaiz : this.recuperarSubDiretorio(diretorioDomainResultado.getCodigo())) {
-					diretorioResponseDTO.getSubdiretorioDiretorioRaizList().add(subdiretorioDiretorioRaiz);
-				}
+	public List<DiretorioResponseDTO> recuperarDiretorioPrimeiroNivel() {
+		List<DiretorioResponseDTO> diretorioResponseDTOList = new ArrayList<>();
+		for(DiretorioDomain diretorioRaiz : this.recuperarDiretorioRaiz()) {
+			DiretorioResponseDTO diretorioResponseDTO = new DiretorioResponseDTO();
+			diretorioResponseDTO.setCodigo(diretorioRaiz.getCodigo());
+			diretorioResponseDTO.setNome(diretorioRaiz.getNome());
+			diretorioResponseDTO.setCodigoDiretorioPai(diretorioRaiz.getCodigoDiretorioPai());
+			diretorioResponseDTOList.add(diretorioResponseDTO);
+		}
+		for(DiretorioResponseDTO diretorioResponseDTO : diretorioResponseDTOList) {
+			for(DiretorioDomain diretorioDomainResultado : this.recuperarSubDiretorio(diretorioResponseDTO.getCodigo())) {
+				diretorioResponseDTO.getSubdiretorioList().add(diretorioDomainResultado);
 			}
-		return diretorioResponseDTO;
+		}
+		return diretorioResponseDTOList;
 	}
 
 }

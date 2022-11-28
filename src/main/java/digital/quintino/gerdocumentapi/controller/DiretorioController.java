@@ -43,7 +43,7 @@ public class DiretorioController {
 	}
 
 	@GetMapping("/primeiro-nivel")
-	public ResponseEntity<DiretorioResponseDTO> recuperarDiretorioPrimeiroNivel() {
+	public ResponseEntity<List<DiretorioResponseDTO>> recuperarDiretorioPrimeiroNivel() {
 		return ResponseEntity.ok().body(this.diretorioService.recuperarDiretorioPrimeiroNivel());
 	}
 
