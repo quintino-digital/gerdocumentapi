@@ -1,6 +1,7 @@
 package digital.quintino.gerdocumentapi.controller;
 
 import digital.quintino.gerdocumentapi.domain.DiretorioDomain;
+import digital.quintino.gerdocumentapi.dto.DiretorioResponseDTO;
 import digital.quintino.gerdocumentapi.service.DiretorioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,11 @@ public class DiretorioController {
 	@GetMapping("/subdiretorio/{codigo}")
 	public ResponseEntity<List<DiretorioDomain>> recuperarSubDiretorio(@PathVariable("codigo") String codigo) {
 		return ResponseEntity.ok().body(this.diretorioService.recuperarSubDiretorio(codigo));
+	}
+
+	@GetMapping("/primeiro-nivel")
+	public ResponseEntity<DiretorioResponseDTO> recuperarDiretorioPrimeiroNivel() {
+		return ResponseEntity.ok().body(this.diretorioService.recuperarDiretorioPrimeiroNivel());
 	}
 
 }

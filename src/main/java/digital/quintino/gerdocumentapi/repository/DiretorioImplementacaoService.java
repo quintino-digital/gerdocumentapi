@@ -18,7 +18,7 @@ public class DiretorioImplementacaoService {
 	public List<DiretorioDomain> recuperarDiretorioRaiz() {
 		StringBuilder query = new StringBuilder("SELECT diretorioDomain ")
 				.append("FROM DiretorioDomain diretorioDomain ")
-				.append("WHERE diretorioDomain.codigoDiretorioPai = ''");
+				.append("WHERE diretorioDomain.codigoDiretorioPai = '' OR diretorioDomain.codigoDiretorioPai IS NULL");
 		TypedQuery<DiretorioDomain> typeQuery = this.entityManager.createQuery(query.toString(), DiretorioDomain.class);
 		return typeQuery.getResultList();
 	}
