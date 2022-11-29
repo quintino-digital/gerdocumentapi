@@ -1,5 +1,6 @@
 package digital.quintino.gerdocumentapi.dto;
 
+import digital.quintino.gerdocumentapi.domain.ArquivoDomain;
 import digital.quintino.gerdocumentapi.domain.DiretorioDomain;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ public class DiretorioResponseDTO {
     private String nome;
 
     private List<DiretorioDomain> subdiretorioList = new ArrayList<>();
+
+    private List<ArquivoDomain> arquivoDomainList = new ArrayList<>();
 
     public DiretorioResponseDTO() { }
 
@@ -47,6 +50,14 @@ public class DiretorioResponseDTO {
 
     public void setSubdiretorioList(List<DiretorioDomain> subdiretorioList) {
         this.subdiretorioList = subdiretorioList;
+    }
+
+    public List<ArquivoDomain> getArquivoDomainList() {
+        return arquivoDomainList;
+    }
+
+    public void setArquivoDomainList(List<ArquivoDomain> arquivoDomainList) {
+        this.arquivoDomainList = arquivoDomainList;
     }
 
 }

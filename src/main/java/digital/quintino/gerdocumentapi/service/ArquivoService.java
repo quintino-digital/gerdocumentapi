@@ -3,7 +3,7 @@ package digital.quintino.gerdocumentapi.service;
 import digital.quintino.gerdocumentapi.domain.ArquivoDomain;
 import digital.quintino.gerdocumentapi.domain.DiretorioDomain;
 import digital.quintino.gerdocumentapi.dto.ArquivoResponseDTO;
-import digital.quintino.gerdocumentapi.repository.ArquivoImplementacaoService;
+import digital.quintino.gerdocumentapi.repository.ArquivoImplementacaoRepository;
 import digital.quintino.gerdocumentapi.repository.ArquivoRepository;
 import digital.quintino.gerdocumentapi.utility.ConstanteUtility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class ArquivoService {
 	private ArquivoRepository arquivoRepository;
 	
 	@Autowired
-	private ArquivoImplementacaoService arquivoImplementacaoService;
+	private ArquivoImplementacaoRepository arquivoImplementacaoService;
 
 	@Autowired
 	private DiretorioService diretorioService;

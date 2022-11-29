@@ -1,8 +1,10 @@
 package digital.quintino.gerdocumentapi.service;
 
+import digital.quintino.gerdocumentapi.domain.ArquivoDomain;
 import digital.quintino.gerdocumentapi.domain.DiretorioDomain;
 import digital.quintino.gerdocumentapi.dto.DiretorioResponseDTO;
-import digital.quintino.gerdocumentapi.repository.DiretorioImplementacaoService;
+import digital.quintino.gerdocumentapi.repository.ArquivoImplementacaoRepository;
+import digital.quintino.gerdocumentapi.repository.DiretorioImplementacaoRepository;
 import digital.quintino.gerdocumentapi.repository.DiretorioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,10 @@ public class DiretorioService {
 	private DiretorioRepository diretorioRepository;
 
 	@Autowired
-	private DiretorioImplementacaoService diretorioImplementacaoService;
+	private DiretorioImplementacaoRepository diretorioImplementacaoService;
+
+	@Autowired
+	private ArquivoImplementacaoRepository arquivoImplementacaoRepository;
 
 	public DiretorioDomain findOne(String codigo) {
 		return this.diretorioRepository.findByCodigo(codigo);
@@ -57,6 +62,27 @@ public class DiretorioService {
 			}
 		}
 		return diretorioResponseDTOList;
+	}
+
+	public List<DiretorioResponseDTO> recuperarDiretorioSegundoNivel() {
+		List<DiretorioResponseDTO> diretorioResponseDTOList = new ArrayList<>();
+		for(DiretorioDomain diretorioRaiz : this.recuperarDiretorioRaiz()) {
+			DiretorioResponseDTO diretorioResponseDTO = new DiretorioResponseDTO();
+			diretorioResponseDTO.setCodigo(diretorioRaiz.getCodigo());
+			diretorioResponseDTO.setNome(diretorioRaiz.getNome());
+			diretorioResponseDTO.setCodigoDiretorioPai(diretorioRaiz.getCodigoDiretorioPai());
+			diretorioResponseDTOList.add(diretorioResponseDTO);
+		}
+		for(DiretorioResponseDTO diretorioResponseDTO : diretorioResponseDTOList) {
+			for(DiretorioDomain diretorioDomainResultado : this.recuperarSubDiretorio(diretorioResponseDTO.getCodigo())) {
+				diretorioResponseDTO.getSubdiretorioList().add(diretorioDomainResultado);
+			}
+		}
+		return diretorioResponseDTOList;
+	}
+
+	public List<ArquivoDomain> recuperarArquivosDiretorio(String codigoDiretorio) {
+		return this.arquivoImplementacaoRepository.recuperarArquivosDiretorio(codigoDiretorio);
 	}
 
 }

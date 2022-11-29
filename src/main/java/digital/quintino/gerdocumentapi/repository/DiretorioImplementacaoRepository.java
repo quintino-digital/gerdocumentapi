@@ -1,6 +1,5 @@
 package digital.quintino.gerdocumentapi.repository;
 
-import digital.quintino.gerdocumentapi.domain.ArquivoDomain;
 import digital.quintino.gerdocumentapi.domain.DiretorioDomain;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +9,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class DiretorioImplementacaoService {
+public class DiretorioImplementacaoRepository {
 	
 	@PersistenceContext
 	private EntityManager entityManager;
