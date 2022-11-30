@@ -67,3 +67,5 @@ insert into tb_diretorio (codigo, nome, id_diretorio_pai) values ('a6273613-fd3d
 insert into tb_diretorio (codigo, nome, id_diretorio_pai) values ('aade2ab7-6f26-11ed-ae61-f4f26d891850', 'Imagem', 'a6273613-fd3d-45f7-9766-5bf2221579ab');
 insert into tb_diretorio (codigo, nome, id_diretorio_pai) values ('18efd88d-6f51-11ed-ae61-f4f26d891850', 'HD EXTERNO - Dados Recuperados', '4724c1df-258a-4056-b3d1-d9eacbb84441');
 insert into tb_diretorio (codigo, nome, id_diretorio_pai) values ('d308d926-6f52-11ed-ae61-f4f26d891850', 'Documentos', '4d5fdab3-27e4-45ff-b659-b0db65f04cd8');
+insert into tb_diretorio (codigo, nome, id_diretorio_pai) values ('97d9079a-70e7-11ed-9fae-9fb5ad4550c3', 'Música', 'a6273613-fd3d-45f7-9766-5bf2221579ab');
+insert into tb_diretorio (codigo, nome, id_diretorio_pai) values ('03b772a8-70e8-11ed-9fae-9fb5ad4550c3', 'Vídeos', 'a6273613-fd3d-45f7-9766-5bf2221579ab');

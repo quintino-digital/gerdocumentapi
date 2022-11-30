@@ -45,7 +45,7 @@ public class ArquivoService {
 
 	private static String NOME_ARQUIVO;
 
-	public static final String DIRETORIO_UPLOAD = System.getProperty("user.home").concat(ConstanteUtility.REPOSITORIO_UPLOAD);
+	public static final String DIRETORIO_UPLOAD = System.getProperty("user.home").concat(ConstanteUtility.REPOSITORIO_UPLOAD_DESENVOLVIMENTO);
 
 	public static final Long TAMANHO_MAXIMO_ARQUIVO = 0L;
 	

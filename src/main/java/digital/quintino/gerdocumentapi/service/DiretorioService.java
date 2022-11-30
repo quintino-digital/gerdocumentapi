@@ -64,19 +64,20 @@ public class DiretorioService {
 		return diretorioResponseDTOList;
 	}
 
-	public List<DiretorioResponseDTO> recuperarDiretorioSegundoNivel() {
+	public List<DiretorioResponseDTO> recuperarDiretorioSegundoNivel(String codigoDiretorio) {
 		List<DiretorioResponseDTO> diretorioResponseDTOList = new ArrayList<>();
-		for(DiretorioDomain diretorioRaiz : this.recuperarDiretorioRaiz()) {
+		for (DiretorioDomain diretorioDomainResultado : this.recuperarSubDiretorio(codigoDiretorio)) {
 			DiretorioResponseDTO diretorioResponseDTO = new DiretorioResponseDTO();
-			diretorioResponseDTO.setCodigo(diretorioRaiz.getCodigo());
-			diretorioResponseDTO.setNome(diretorioRaiz.getNome());
-			diretorioResponseDTO.setCodigoDiretorioPai(diretorioRaiz.getCodigoDiretorioPai());
-			diretorioResponseDTOList.add(diretorioResponseDTO);
-		}
-		for(DiretorioResponseDTO diretorioResponseDTO : diretorioResponseDTOList) {
-			for(DiretorioDomain diretorioDomainResultado : this.recuperarSubDiretorio(diretorioResponseDTO.getCodigo())) {
-				diretorioResponseDTO.getSubdiretorioList().add(diretorioDomainResultado);
-			}
+				diretorioResponseDTO.setCodigo(diretorioDomainResultado.getCodigo());
+				diretorioResponseDTO.setNome(diretorioDomainResultado.getNome());
+				diretorioResponseDTO.setCodigoDiretorioPai(codigoDiretorio);
+				diretorioResponseDTOList.add(diretorioResponseDTO);
+				for(DiretorioDomain subDiretorioDomain : this.recuperarSubDiretorio(diretorioResponseDTO.getCodigo())) {
+					diretorioResponseDTO.getSubdiretorioList().add(subDiretorioDomain);
+				}
+				for(ArquivoDomain arquivoDomain : this.recuperarArquivosDiretorio(diretorioResponseDTO.getCodigo())) {
+					diretorioResponseDTO.getArquivoDomainList().add(arquivoDomain);
+				}
 		}
 		return diretorioResponseDTOList;
 	}

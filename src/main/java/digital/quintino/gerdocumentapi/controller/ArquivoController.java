@@ -29,6 +29,7 @@ import static java.nio.file.Paths.get;
 
 @RestController
 @RequestMapping("/api/v1/arquivo")
+@CrossOrigin("*")
 public class ArquivoController {
 	
 	@Autowired
